@@ -1,64 +1,63 @@
-dsn: postgres://postgres:testpostgrespwd@kratos-db:5432/postgres?sslmode=disable&max_conns=20
+version: v0.5.3-alpha.1
 
 serve:
   public:
-    base_url: http://local.lanodispenser.no:4433/
+    base_url: https://identity.lanodispenser.no/api
     cors:
       enabled: true
       allowed_origins:
-        - http://localhost/
         - https://*.lanodispenser.no/
         - https://*.lanodispenser.no
-        - http://*.lanodispenser.no:4455
-        - http://127.0.0.1/
+        - https://lanodispenser.no
       allowed_methods:
         - POST
         - GET
         - PUT
         - DELETE
         - HEAD
-      debug: true
   admin:
-    base_url: http://kratos:4434/
+    base_url: https://identity.lanodispenser.no/admin
 
 selfservice:
-  default_browser_return_url: http://local.lanodispenser.no:4455/
+  default_browser_return_url: https://identity.lanodispenser.no/
   whitelisted_return_urls:
-    - http://local.lanodispenser.no:4455
-
+    - https://identity.lanodispenser.no
+    - https://trip-collector.lanodispenser.no
+    - https://*.lanodispenser.no
+  
   methods:
     password:
       enabled: true
 
   flows:
     error:
-      ui_url: http://local.lanodispenser.no:4455/error
+      ui_url: https://identity.lanodispenser.no/error
 
     settings:
-      ui_url: http://local.lanodispenser.no:4455/settings
-      privileged_session_max_age: 15m
+      ui_url: https://identity.lanodispenser.no/settings
+      privileged_session_max_age: 5m
 
     recovery:
       enabled: true
-      ui_url: http://local.lanodispenser.no:4455/recovery
+      ui_url: https://identity.lanodispenser.no/recovery
 
     verification:
       enabled: true
-      ui_url: http://local.lanodispenser.no:4455/verify
+      ui_url: https://identity.lanodispenser.no/verify
       after:
-        default_browser_return_url: http://local.lanodispenser.no:4455/
+        default_browser_return_url: https://identity.lanodispenser.no/
 
     logout:
       after:
-        default_browser_return_url: http://local.lanodispenser.no:4455/auth/login
+        default_browser_return_url: https://identity.lanodispenser.no/auth/login
 
     login:
-      ui_url: http://local.lanodispenser.no:4455/auth/login
+      ui_url: https://identity.lanodispenser.no/auth/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: http://local.lanodispenser.no:4455/auth/registration
+      ui_url: https://identity.lanodispenser.no/auth/registration
       after:
         password:
           hooks:
@@ -66,21 +65,13 @@ selfservice:
               hook: session
 
 log:
-  level: debug
+  level: info
   format: text
-  leak_sensitive_values: true
+  leak_sensitive_values: false
 
 secrets:
   cookie:
-    - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
-
-hashers:
-  argon2:
-    parallelism: 1
-    memory: 131072
-    iterations: 2
-    salt_length: 16
-    key_length: 16
+    - v6cS5ls97pWAVxdVBVMa
 
 identity:
   default_schema_url: file:/home/ory/identity.traits.schema.json
@@ -88,5 +79,3 @@ identity:
 courier:
   smtp:
     connection_uri: smtp://0ea1b9e3c8d8d7:b5dab203e5342b@smtp.mailtrap.io:2525
-
-version: v0.5.3-alpha.1-sqlite

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-kratos
+  labels:
+    app: identity
+    part: identity-kratos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity
+      part: identity-kratos
+  template:
+    metadata:
+      labels:
+        app: identity
+        part: identity-kratos
+    spec:
+      containers:
+      - name: identity-kratos
+        image: localhost:32000/identity-kratos:3
+        env:
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: identity-db-pwd
+                key: pwd
+          - name: DSN
+            value: postgres://postgres:$(DB_PASSWORD)@identity-db:5432/postgres?sslmode=disable&max_conns=20
+
+        ports:
+        - containerPort: 4433
+        - containerPort: 4434
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-kratos
+  labels:
+    app: identity
+    part: identity-kratos
+spec:
+  selector:
+    part: identity-kratos
+  ports:
+    - protocol: TCP
+      name: "self-service"
+      port: 4433
+      targetPort: 4433
+    - protocol: TCP
+      name: "admin"
+      port: 4434
+      targetPort: 4434
