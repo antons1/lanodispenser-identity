@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-client
+  labels:
+    app: identity
+    part: identity-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity
+      part: identity-client
+  template:
+    metadata:
+      labels:
+        app: identity
+        part: identity-client
+    spec:
+      containers:
+      - name: identity-client
+        image: localhost:32000/identity-client:1
+        ports:
+        - containerPort: 4455
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-client
+  labels:
+    app: identity
+    part: identity-client
+spec:
+  selector:
+    part: identity-client
+  ports:
+    - protocol: TCP
+      name: "self-service"
+      port: 4455
+      targetPort: 4455

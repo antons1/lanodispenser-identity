@@ -1,4 +1,5 @@
 import React from 'react';
+import { config } from './config';
 
 export function Login({ }) {
     const params = new URLSearchParams(window.location.search);
@@ -14,7 +15,7 @@ export function Login({ }) {
         setLoading(true);
         setError(null);
         if(!flow) return;
-        fetch(`//local.lanodispenser.no:4433/self-service/login/flows?id=${flow}`, {redirect: "manual", credentials: "include"})
+        fetch(`//${config().host}/self-service/login/flows?id=${flow}`, {redirect: "manual", credentials: "include"})
         .then((res) => res.json())
         .then((res) => {
             setLoading(false);

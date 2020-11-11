@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import { config } from './config';
 
 export function NewUser({ }) {
     const params = new URLSearchParams(window.location.search);
@@ -16,7 +17,7 @@ export function NewUser({ }) {
         setLoading(true);
         setError(null);
         if(!flow) return;
-        fetch(`//local.lanodispenser.no:4433/self-service/registration/flows?id=${flow}`, {redirect: "manual", credentials: "include"})
+        fetch(`//${config().host}/self-service/registration/flows?id=${flow}`, {redirect: "manual", credentials: "include"})
         .then((res) => res.json())
         .then((res) => {
             setLoading(false);

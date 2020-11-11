@@ -7,11 +7,12 @@ import { Login } from './Login';
 import { Settings } from './Settings';
 import { Recovery } from './Recovery';
 import { Verify } from './Verify';
+import { config } from './config';
 
 export function App({ }) {
     const [user, setUser] = React.useState({});
     React.useEffect(() => {
-        fetch("//local.lanodispenser.no:4433/sessions/whoami", { credentials: "include" })
+        fetch(`//${config().host}/sessions/whoami`, { credentials: "include" })
         .then((res) => res.json())
         .then((res) => {
             console.log(res);
@@ -25,11 +26,11 @@ export function App({ }) {
             <h1>Welcome to user setup{user.traits ? ` ${user.traits.email} (${user.id})` : ""}</h1>
             <nav>
                 <ul>
-                    <li><a href="//local.lanodispenser.no:4433/self-service/registration/browser">Register</a></li>
-                    <li><a href="//local.lanodispenser.no:4433/self-service/login/browser">Login</a></li>
-                    <li><a href="//local.lanodispenser.no:4433/self-service/recovery/browser">Account Recovery</a></li>
-                    <li><a href="//local.lanodispenser.no:4433/self-service/settings/browser">Account Settings</a></li>
-                    <li><a href="//local.lanodispenser.no:4433/self-service/browser/flows/logout">Log out</a></li>
+                    <li><a href={`//${config().host}/self-service/registration/browser`}>Register</a></li>
+                    <li><a href={`//${config().host}/self-service/login/browser`}>Login</a></li>
+                    <li><a href={`//${config().host}/self-service/recovery/browser`}>Account Recovery</a></li>
+                    <li><a href={`//${config().host}/self-service/settings/browser`}>Account Settings</a></li>
+                    <li><a href={`//${config().host}/self-service/browser/flows/logout`}>Log out</a></li>
                 </ul>
             </nav>
             <Switch>

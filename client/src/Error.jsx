@@ -1,4 +1,5 @@
 import React from 'react';
+import { config } from './config';
 
 export function Error({ }) {
     const params = new URLSearchParams(window.location.search);
@@ -7,7 +8,7 @@ export function Error({ }) {
 
     React.useEffect(() => {
         if(!error) return;
-        fetch(`//127.0.0.1:4433/self-service/errors?error=${error}`)
+        fetch(`//${config().host}/self-service/errors?error=${error}`)
         .then((res) => res.json())
         .then((res) => {
             console.log(res);
