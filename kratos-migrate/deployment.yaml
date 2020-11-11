@@ -1,0 +1,22 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: identity-db-migrate
+  labels:
+    app: identity
+    part: identity-db-migrate
+spec:
+  restartPolicy: Never
+  containers:
+  - name: identity-db-migrate
+    image: localhost:32000/kratos-migrate
+    env:
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: identity-db-pwd
+            key: pwd
+    command: ["kratos"]
+    args: ["migrate", "sql", "--yes", "postgres://postgres:$(POSTGRES_PASSWORD)@identity-db:5432/postgres?sslmode=disable&max_conns=20"]
+    
