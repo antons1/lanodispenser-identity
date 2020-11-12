@@ -64,14 +64,13 @@ selfservice:
             -
               hook: session
 
+cookie:
+  domain: lanodispenser.no
+
 log:
   level: info
   format: text
   leak_sensitive_values: false
-
-secrets:
-  cookie:
-    - v6cS5ls97pWAVxdVBVMa
 
 identity:
   default_schema_url: file:/home/ory/identity.traits.schema.json

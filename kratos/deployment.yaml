@@ -7,6 +7,8 @@ metadata:
     part: identity-kratos
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: identity
@@ -19,13 +21,18 @@ spec:
     spec:
       containers:
       - name: identity-kratos
-        image: localhost:32000/identity-kratos:3
+        image: registry.mk8s.lanodispenser.no/identity-kratos:3
         env:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: identity-db-pwd
                 key: pwd
+          - name: SECRETS_DEFAULT
+            valueFrom:
+                secretKeyRef:
+                  name: identity-cookie-key
+                  key: cookie-signing-key
           - name: DSN
             value: postgres://postgres:$(DB_PASSWORD)@identity-db:5432/postgres?sslmode=disable&max_conns=20
 
