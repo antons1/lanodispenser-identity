@@ -32,4 +32,4 @@ jobs:
         manifests: |
           client/deployment.yaml
         images: |
-          $REGISTRY/$APP:${{ steps.vars.outputs.sha_short }}
+          registry.mk8s.lanodispenser.no/identity-client:${{ steps.vars.outputs.sha_short }}

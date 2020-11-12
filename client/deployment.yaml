@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: identity-client
-        image: localhost:32000/identity-client:1
+        image: registry.mk8s.lanodispenser.no/identity-client
         ports:
         - containerPort: 4455
 ---

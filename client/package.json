@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel -p 4455 ./public/index.html",
+    "start": "parcel -p 4455 --https ./public/index.html",
     "build": "parcel build ./public/index.html"
   },
   "author": "",

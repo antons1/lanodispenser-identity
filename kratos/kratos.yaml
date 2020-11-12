@@ -8,6 +8,7 @@ serve:
         - https://*.lanodispenser.no
         - https://lanodispenser.no
         - https://local.lanodispenser.no:4455
+        - https://local.lanodispenser.no:1234
       allowed_methods:
         - POST
         - GET
@@ -25,6 +26,7 @@ selfservice:
     - https://*.lanodispenser.no
     - http://local.lanodispenser.no:4455
     - https://local.lanodispenser.no:4455
+    - https://local.lanodispenser.no:1234
   
   methods:
     password:
