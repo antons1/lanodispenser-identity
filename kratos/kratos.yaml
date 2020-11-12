@@ -63,9 +63,9 @@ selfservice:
           hooks:
             -
               hook: session
-
-cookie:
-  domain: lanodispenser.no
+session:
+  cookie:
+    domain: lanodispenser.no
 
 log:
   level: info
