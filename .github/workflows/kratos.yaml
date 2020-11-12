@@ -32,4 +32,4 @@ jobs:
         manifests: |
           kratos/deployment.yaml
         images: |
-          $REGISTRY/$APP:${{ steps.vars.outputs.sha_short }}
+          registry.mk8s.lanodispenser.no/identity-kratos:${{ steps.vars.outputs.sha_short }}
