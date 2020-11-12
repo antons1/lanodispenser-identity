@@ -7,6 +7,8 @@ metadata:
     part: identity-client
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: identity

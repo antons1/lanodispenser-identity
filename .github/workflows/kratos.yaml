@@ -1,6 +1,8 @@
 on:
   push:
     branches: [ master ]
+    paths:
+    - "kratos/**"
   workflow_dispatch:
 
 jobs:
@@ -11,11 +13,14 @@ jobs:
       APP: identity-kratos
     steps:
     - uses: actions/checkout@master
-    
+    - name: Set SHA
+      id: vars
+      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
     - working-directory: kratos
       run: |
-        docker build . -t $REGISTRY/$APP:${{ github.sha }}
-        docker push $REGISTRY/$APP:${{ github.sha }}
+        docker build . -t $REGISTRY/$APP:${{ steps.vars.outputs.sha_short }}
+        docker push $REGISTRY/$APP:${{ steps.vars.outputs.sha_short }}
       
       
     - uses: Azure/k8s-set-context@v1
@@ -27,4 +32,4 @@ jobs:
         manifests: |
           kratos/deployment.yaml
         images: |
-          $REGISTRY/$APP:${{ github.sha }}
+          $REGISTRY/$APP:${{ steps.vars.outputs.sha_short }}
