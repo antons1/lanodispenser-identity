@@ -14,7 +14,7 @@ export function Login({ }) {
     React.useEffect(() => {
         setLoading(true);
         setError(null);
-        if(!flow) return;
+        if(!flow) window.location = `//${config().host}/self-service/login/browser`;
         fetch(`//${config().host}/self-service/login/flows?id=${flow}`, {redirect: "manual", credentials: "include"})
         .then((res) => res.json())
         .then((res) => {
