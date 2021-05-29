@@ -23,8 +23,8 @@ The app consists of three parts:
 
 This (should) mostly just be running `kubectl apply -f deployment.yaml` in the folders in the correct order
 
-* The password for the database needs to be set in a secret (e.g. `kubectl create secret generic identity-db-pwd -f secrets/identity-db-pwd`)
-* The cookie signing key for kratos needs to be set in a secret (e.g. `kubectl create secret generic identity-cookie-key -f secrets/cookie-signing-key`)
+* The password for the database needs to be set in a secret (e.g. `kubectl create secret generic identity-db-pwd --from-file secrets/identity-db-pwd`)
+* The cookie signing key for kratos needs to be set in a secret (e.g. `kubectl create secret generic identity-cookie-key --from-file secrets/cookie-signing-key`)
 
 The deployments are set up to pull from the local registry, so the images need to be built and pushed there before the deployments can get up and running.
 Tagging of the images is done by the github actions, so the deployment manifests do not speciy any specific tag. If you are deploying for the first time, you can just
